@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -45,18 +46,19 @@ RecyclerView repo;
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        recycler_ViewAdapter r=new recycler_ViewAdapter();
+
 repo= (RecyclerView) findViewById(R.id.repo);
         repo.setLayoutManager(new LinearLayoutManager(this));
-repo.setAdapter(r);
+recycler_ViewAdapter r=new recycler_ViewAdapter(MainActivity.this);
+        repo.setAdapter(r);
+
         //myDialog m=new myDialog();
         //m.show(getFragmentManager(),"nbnn");
 
     }
-
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.language_choser);

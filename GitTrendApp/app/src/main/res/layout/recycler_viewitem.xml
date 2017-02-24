@@ -38,15 +38,7 @@
         android:layout_width="120dp"
         />
 
-    <TextView
-        android:text="TextView"
-        android:layout_height="20dp"
-        android:id="@+id/watcher"
-        android:layout_below="@+id/lang_used"
-        android:layout_centerHorizontal="true"
-        android:layout_width="120dp" />
-
-    <TextView
+        <TextView
         android:text="TextView"
         android:layout_width="match_parent"
         android:id="@+id/lang_used"

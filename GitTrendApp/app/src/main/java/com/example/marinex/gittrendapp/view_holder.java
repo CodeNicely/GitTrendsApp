@@ -15,7 +15,6 @@ public class view_holder extends RecyclerView.ViewHolder {
         title= (TextView) itemView.findViewById(R.id.title);
         lang_used= (TextView) itemView.findViewById(R.id.lang_used);
         star= (TextView) itemView.findViewById(R.id.star);
-        watch= (TextView) itemView.findViewById(R.id.watcher);
         forks= (TextView) itemView.findViewById(R.id.forks);
     }
 }
