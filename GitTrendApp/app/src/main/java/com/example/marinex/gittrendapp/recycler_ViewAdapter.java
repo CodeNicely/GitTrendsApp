@@ -15,22 +15,23 @@ import java.util.ArrayList;
  */
 
 public class recycler_ViewAdapter extends RecyclerView.Adapter<view_holder> {
-    String url;Context context;ArrayList<String> tittle,language;
-    ArrayList<Integer> stars,fork;
-    public recycler_ViewAdapter(ArrayList<String> name,ArrayList<String> lang,ArrayList<Integer> forks,ArrayList<Integer> star,Context c){
-       this.tittle=name;
-        this.language=lang;
-        this.fork=forks;
-        this.stars=star;
+    ArrayList<String> tittle=new ArrayList<>();
+    ArrayList<String> language=new ArrayList<>();
+    ArrayList<Integer> fork=new ArrayList<>();
+    ArrayList<Integer> stars=new ArrayList<>();
+    public recycler_ViewAdapter(ArrayList<String> name,ArrayList<String> lang,ArrayList<Integer> forks,ArrayList<Integer> star){
+       this.tittle.addAll(name);
+        this.language.addAll(lang);
+        this.fork.addAll(forks);
+        this.stars.addAll(star);
 
-this.context=c;
+
 
     }
 
     @Override
     public view_holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v=(LayoutInflater.from(parent.getContext())).inflate(R.layout.recycler_viewitem,parent,false);
-        Toast.makeText(context, "x", Toast.LENGTH_SHORT).show();
         return new view_holder(v);
 
     }
@@ -40,17 +41,16 @@ this.context=c;
 
 
 
-       holder.title.setText(tittle.get(position));
-        holder.lang_used.setText(language.get(position));
-        holder.star.setText(stars.get(position));
-        holder.forks.setText(fork.get(position));
+      holder.title.setText("  "+tittle.get(position));
+        holder.lang_used.setText("  "+language.get(position));
+
         int i = fork.get(position);
         int j = stars.get(position);
         if (i >= 1000) {
             i = i / 1000;
-            holder.star.setText("Stars " + i + "k");
+            holder.star.setText("   Stars " + i + "k");
         } else {
-            holder.star.setText("Stars " + i);
+            holder.star.setText("   Stars " + i);
         }
         if (j >= 1000) {
             j = j / 1000;

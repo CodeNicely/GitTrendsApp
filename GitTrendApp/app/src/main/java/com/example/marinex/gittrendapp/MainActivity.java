@@ -1,5 +1,8 @@
 package com.example.marinex.gittrendapp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,20 +28,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-RecyclerView repo;
+RecyclerView repo;recycler_ViewAdapter adapter;
     //FragmentManager f=getSupportFragmentManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dataModel dataModel=new dataModel("https://api.github.com/search/repositories?q=created:2017-02-23+language:assembly&sort=stars&order=desc",this);
-        dataModel.execute();
+      repo=(RecyclerView)findViewById(R.id.repo);
+        repo.setLayoutManager(new LinearLayoutManager(this));
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,6 +63,7 @@ RecyclerView repo;
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+new dataModel("https://api.github.com/search/repositories?q=created:2017-02-23+language:assembly&sort=stars&order=desc").execute();
 
 
         //myDialog m=new myDialog();
@@ -147,9 +158,87 @@ RecyclerView repo;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void getDate(){
 
-           }
+    public class dataModel extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog pDialog;
+        private String TAG = dataModel.class.getSimpleName();
+        String url;
+
+        String jsonStr;
+        ArrayList<String> name = new ArrayList<String>();
+        ArrayList<String> language = new ArrayList<String>();
+        ArrayList<Integer> forks = new ArrayList<Integer>();
+        ArrayList<Integer> stars = new ArrayList<Integer>();
+
+
+        public dataModel(String api) {
+            this.url = api;
+
+        }
+
+
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            HttpHandler sh = new HttpHandler();
+
+            // Making a request to url and getting response
+            jsonStr = sh.makeServiceCall(url);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+
+
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+                    // Getting JSON Array node
+                    JSONArray item = jsonObj.getJSONArray("items");
+
+                    // looping through All Contacts
+                    for (int i = 0; i < 20; i++) {
+                        JSONObject c = item.getJSONObject(i);
+                        name.add(c.getString("name"));
+                        language.add(c.getString("language"));
+                        forks.add(c.getInt("forks"));
+                        stars.add(c.getInt("watchers"));
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+adapter=new recycler_ViewAdapter(name,language,forks,stars);
+                repo.setAdapter(adapter);
+            }
+
+        }
+    }
+
+
+
 
 }
- //get date and day
+
+
+
