@@ -1,7 +1,10 @@
 package com.example.marinex.gittrendapp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.IntegerRes;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +22,16 @@ public class recycler_ViewAdapter extends RecyclerView.Adapter<view_holder> {
     ArrayList<String> language=new ArrayList<>();
     ArrayList<Integer> fork=new ArrayList<>();
     ArrayList<Integer> stars=new ArrayList<>();
-    public recycler_ViewAdapter(ArrayList<String> name,ArrayList<String> lang,ArrayList<Integer> forks,ArrayList<Integer> star){
+    ArrayList<String> svn_url=new ArrayList<>();
+    Context context;
+    public recycler_ViewAdapter(ArrayList<String> name,ArrayList<String> lang,
+                                ArrayList<Integer> forks,ArrayList<Integer> star,ArrayList<String> svn,Context c){
        this.tittle.addAll(name);
         this.language.addAll(lang);
         this.fork.addAll(forks);
         this.stars.addAll(star);
-
+        this.svn_url.addAll(svn);
+this.context=c;
 
 
     }
@@ -32,16 +39,15 @@ public class recycler_ViewAdapter extends RecyclerView.Adapter<view_holder> {
     @Override
     public view_holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v=(LayoutInflater.from(parent.getContext())).inflate(R.layout.recycler_viewitem,parent,false);
+
         return new view_holder(v);
 
     }
 
     @Override
-    public void onBindViewHolder(view_holder holder, int position) {
+    public void onBindViewHolder(view_holder holder, final int position) {
 
-
-
-      holder.title.setText("  "+tittle.get(position));
+        holder.title.setText("  "+tittle.get(position));
         holder.lang_used.setText("  "+language.get(position));
 
         int i = fork.get(position);
@@ -57,7 +63,18 @@ public class recycler_ViewAdapter extends RecyclerView.Adapter<view_holder> {
             holder.forks.setText("forks " + j + "k");
         } else {
             holder.forks.setText("forks " + j);
+
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                customTabsIntent.launchUrl(context, Uri.parse(svn_url.get(position)));
+            }
+        });
+
+
     }
 
 
@@ -66,4 +83,6 @@ public class recycler_ViewAdapter extends RecyclerView.Adapter<view_holder> {
 
         return tittle.size();
     }
+
+
 }

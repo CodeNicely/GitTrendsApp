@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -68,8 +69,6 @@ RecyclerView repo;recycler_ViewAdapter adapter;
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
 
 
         //myDialog m=new myDialog();
@@ -213,6 +212,7 @@ RecyclerView repo;recycler_ViewAdapter adapter;
         ArrayList<String> language = new ArrayList<String>();
         ArrayList<Integer> forks = new ArrayList<Integer>();
         ArrayList<Integer> stars = new ArrayList<Integer>();
+        ArrayList<String> svn_url=new ArrayList<>();
 
 
         public dataModel(String api) {
@@ -266,15 +266,14 @@ RecyclerView repo;recycler_ViewAdapter adapter;
                         language.add(c.getString("language"));
                         forks.add(c.getInt("forks"));
                         stars.add(c.getInt("watchers"));
-
+                        svn_url.add(c.getString("svn_url"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-adapter=new recycler_ViewAdapter(name,language,forks,stars);
+adapter=new recycler_ViewAdapter(name,language,forks,stars,svn_url,MainActivity.this);
                 repo.setAdapter(adapter);
             }
-
         }
     }
 
