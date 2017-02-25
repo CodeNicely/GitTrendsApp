@@ -35,6 +35,8 @@ RecyclerView repo;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dataModel dataModel=new dataModel("https://api.github.com/search/repositories?q=created:2017-02-23+language:assembly&sort=stars&order=desc",this);
+        dataModel.execute();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -50,10 +52,7 @@ RecyclerView repo;
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-repo= (RecyclerView) findViewById(R.id.repo);
-        repo.setLayoutManager(new LinearLayoutManager(this));
-recycler_ViewAdapter r=new recycler_ViewAdapter(MainActivity.this);
-        repo.setAdapter(r);
+
 
         //myDialog m=new myDialog();
         //m.show(getFragmentManager(),"nbnn");
@@ -147,4 +146,5 @@ recycler_ViewAdapter r=new recycler_ViewAdapter(MainActivity.this);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

@@ -3,6 +3,7 @@ package com.example.marinex.gittrendapp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,12 +37,13 @@ public class dataModel extends AsyncTask<Void, Void, Void> {
     ArrayList<Integer> stars = new ArrayList<Integer>();
 
 
-
     public dataModel(String api,Context c) {
         this.url = api;
-this.context=c;
-        Toast.makeText(c, "hkuh", Toast.LENGTH_SHORT).show();
+        this.context=c;
     }
+
+
+
 
     @Override
     protected void onPreExecute() {
@@ -51,7 +53,7 @@ this.context=c;
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
         pDialog.show();
-        Toast.makeText(context, "x", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -63,6 +65,15 @@ this.context=c;
 
         Log.e(TAG, "Response from url: " + jsonStr);
 
+
+        return null;
+    }
+
+    protected void onPostExecute(Void result) {
+        super.onPostExecute(result);
+        // Dismiss the progress dialog
+        if (pDialog.isShowing())
+            pDialog.dismiss();
         if (jsonStr != null) {
             try {
                 JSONObject jsonObj = new JSONObject(jsonStr);
@@ -82,31 +93,17 @@ this.context=c;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            LayoutInflater i=LayoutInflater.from(context);
+            View v=i.inflate(R.layout.content_main,null);
+            RecyclerView r= (RecyclerView) v.findViewById(R.id.repo);
+            recycler_ViewAdapter adapter=new recycler_ViewAdapter(name,language,forks,stars,context);
+            r.setLayoutManager(new LinearLayoutManager(context));
+            r.setAdapter(adapter);
+
         }
-        return null;
-    }
 
-    protected void onPostExecute(Void result) {
-        super.onPostExecute(result);
-        // Dismiss the progress dialog
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }
-
-    public ArrayList<String> getName() {
-        return name;
-    }
-
-    public ArrayList<String> getLanguage() {
-        return language;
-    }
-
-    public ArrayList<Integer> getForks() {
-        return forks;
-    }
-
-    public ArrayList<Integer> getStars() {
-        return stars;
     }
 }
+
+
 
