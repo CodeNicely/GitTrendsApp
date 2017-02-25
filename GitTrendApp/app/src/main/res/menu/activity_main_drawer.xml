@@ -12,9 +12,7 @@
         <item
             android:id="@+id/c"
             android:title="C" />
-        <item
-            android:id="@+id/chash"
-            android:title="C#" />
+
         <item
             android:id="@+id/c_plus"
             android:title="C++" />
@@ -29,14 +27,23 @@
             android:id="@+id/javascript"
             android:title="javascript" />
         <item
+            android:id="@+id/perl"
+            android:title="Perl"/>
+        <item
             android:id="@+id/php"
             android:title="PHP" />
         <item
             android:id="@+id/python"
             android:title="Python" />
         <item
+            android:id="@+id/matlab"
+            android:title="matlab" />
+        <item
             android:id="@+id/ruby"
             android:title="Ruby" />
+        <item
+            android:id="@+id/shell"
+            android:title="Shell" />
         <item
             android:id="@+id/sql"
             android:title="SQL" />
@@ -47,9 +54,7 @@
             android:id="@+id/xml"
             android:title="XML"/>
 
-        <item
-            android:id="@+id/search"
-            android:title="Search" />
+
 
     </group>
 

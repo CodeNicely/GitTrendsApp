@@ -127,43 +127,73 @@ RecyclerView repo;recycler_ViewAdapter adapter;
         int id = item.getItemId();
 
         if (id == R.id.c) {
-            
+            language="c";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
 
         } else if (id == R.id.c_plus) {
-
+            language="cpp";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         } else if (id == R.id.java) {
-
+            language="java";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         } else if (id == R.id.php) {
-
+            language="php";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         } else if (id == R.id.python) {
-
+            language="python";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         } else if (id == R.id.html) {
-
+            language="html";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         }
         else if (id == R.id.javascript) {
-
+            language="javascript";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         }
         else if (id == R.id.ruby) {
-
+            language="ruby";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         }else if (id == R.id.all) {
-
-        }else if (id == R.id.html) {
-
+            language="all";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         }
-        else if (id == R.id.chash) {
 
+        else if (id == R.id.css) {
+            language="css";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         }
-        else if (id == R.id.xml) {
-
-        }else if (id == R.id.css) {
-
+        else if (id == R.id.perl) {
+            language="perl";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         }
-        else if (id == R.id.search) {
-
+        else if (id == R.id.matlab) {
+            language="matlab";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         }
-        else if (id == R.id.sql) {
-
+        else if (id == R.id.shell) {
+            language="shell";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         }
+        else if (id == R.id.assembly) {
+            language="assembly";
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
+        }
+
+
 
 
 
