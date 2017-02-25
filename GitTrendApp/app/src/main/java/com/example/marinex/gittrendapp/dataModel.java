@@ -96,8 +96,8 @@ public class dataModel extends AsyncTask<Void, Void, Void> {
             LayoutInflater i=LayoutInflater.from(context);
             View v=i.inflate(R.layout.content_main,null);
             RecyclerView r= (RecyclerView) v.findViewById(R.id.repo);
-            recycler_ViewAdapter adapter=new recycler_ViewAdapter(name,language,forks,stars,context);
             r.setLayoutManager(new LinearLayoutManager(context));
+            recycler_ViewAdapter adapter=new recycler_ViewAdapter(name,language,forks,stars,context);
             r.setAdapter(adapter);
 
         }

@@ -40,7 +40,7 @@ this.context=c;
 
 
 
-      /* holder.title.setText(tittle.get(position));
+       holder.title.setText(tittle.get(position));
         holder.lang_used.setText(language.get(position));
         holder.star.setText(stars.get(position));
         holder.forks.setText(fork.get(position));
@@ -57,13 +57,13 @@ this.context=c;
             holder.forks.setText("forks " + j + "k");
         } else {
             holder.forks.setText("forks " + j);
-        }*/
+        }
     }
 
 
     @Override
     public int getItemCount() {
 
-        return 1;
+        return tittle.size();
     }
 }

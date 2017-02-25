@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -146,5 +147,9 @@ RecyclerView repo;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    public void getDate(){
+
+           }
 
 }
+ //get date and day
