@@ -35,11 +35,15 @@ import org.json.JSONObject;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 RecyclerView repo;recycler_ViewAdapter adapter;
+    String url1,url2,url3,language,date,url;
+
+    Calendar calendar=Calendar.getInstance();
     //FragmentManager f=getSupportFragmentManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,23 +51,25 @@ RecyclerView repo;recycler_ViewAdapter adapter;
         setContentView(R.layout.activity_main);
       repo=(RecyclerView)findViewById(R.id.repo);
         repo.setLayoutManager(new LinearLayoutManager(this));
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.language_choser);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+         date=this.thisweek();
+         language="all";
+        url1="https://api.github.com/search/repositories?q=created:";
+        url2="+language:";
+        url3="&sort=stars&order=desc";
+        url=url1+date+url2+language+url3;
+        new dataModel(url).execute();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-new dataModel("https://api.github.com/search/repositories?q=created:2017-02-23+language:assembly&sort=stars&order=desc").execute();
+
 
 
         //myDialog m=new myDialog();
@@ -95,14 +101,20 @@ new dataModel("https://api.github.com/search/repositories?q=created:2017-02-23+l
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.today) {
-            return true;
-        }
-        else if (id == R.id.this_week) {
-            return true;
+        if (id == R.id.week) {
+            date=this.thisweek();
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         }
         else if (id == R.id.this_month) {
-            return true;
+            date=this.thisMonth();
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
+        }
+        else if (id == R.id.this_year) {
+            date=this.thisYear();
+            url=url1+date+url2+language+url3;
+            new dataModel(url).execute();
         }
 
         return super.onOptionsItemSelected(item);
@@ -115,6 +127,7 @@ new dataModel("https://api.github.com/search/repositories?q=created:2017-02-23+l
         int id = item.getItemId();
 
         if (id == R.id.c) {
+            
 
         } else if (id == R.id.c_plus) {
 
@@ -236,7 +249,38 @@ adapter=new recycler_ViewAdapter(name,language,forks,stars);
     }
 
 
+public String thisweek(){
 
+
+
+
+    int date=calendar.get(Calendar.DAY_OF_MONTH)-calendar.get(Calendar.DAY_OF_WEEK)+1;
+    String month;
+    if((calendar.get(Calendar.MONTH)+1)<10){
+        month="0"+(calendar.get(Calendar.MONTH)+1);
+    }
+    else
+    {
+        month=""+(calendar.get(Calendar.MONTH)+1);
+    }
+    int Year=calendar.get(Calendar.YEAR);
+    String week=Year+"-"+month+"-"+date;
+    return week;
+}
+    public String thisMonth(){
+        String month;
+        if((calendar.get(Calendar.MONTH)+1)<10){
+            month="0"+(calendar.get(Calendar.MONTH)+1);
+        }
+        else
+        {
+            month=""+(calendar.get(Calendar.MONTH)+1);
+        }
+        return ""+calendar.get(Calendar.YEAR)+"-"+month;
+    }
+    public String thisYear(){
+        return ""+calendar.get(Calendar.YEAR);
+    }
 
 }
 
