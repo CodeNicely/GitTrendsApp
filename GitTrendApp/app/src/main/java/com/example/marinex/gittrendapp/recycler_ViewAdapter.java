@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /**
@@ -50,25 +51,31 @@ this.context=c;
 
         holder.title.setText("  "+tittle.get(position));
         holder.lang_used.setText("  "+language.get(position));
+        NumberFormat nf=NumberFormat.getInstance();
 
         float j = fork.get(position);
         float i = stars.get(position);
         if (i>= 1000) {
             i = i / 1000;
+            nf.setMaximumFractionDigits(1);
 
-            holder.star.setText("   Stars " + i + "k");
+            holder.star.setText("   stars " + nf.format(i) + "k");
         } else {
+            nf.setMaximumFractionDigits(0);
 
-            holder.star.setText("   Stars " + i);
+            holder.star.setText("   Stars " + nf.format(i));
 
         }
         if (j >= 1000) {
             j = j / 1000;
+            nf.setMaximumFractionDigits(1);
 
-            holder.forks.setText("forks " + j + "k");
+            holder.forks.setText("forks " +   nf.format(i)+ "k");
         } else {
 
-            holder.forks.setText("forks " + j);
+            nf.setMaximumFractionDigits(0);
+
+            holder.forks.setText("forks " +  nf.format(i));
 
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {

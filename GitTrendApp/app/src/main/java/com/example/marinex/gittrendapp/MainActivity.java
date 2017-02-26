@@ -238,7 +238,7 @@ checkConnection();
             // Making a request to url and getting response
             jsonStr = sh.makeServiceCall(url);
 
-            Log.e(TAG, "Response from url: " + jsonStr);
+
 
 
             return null;
