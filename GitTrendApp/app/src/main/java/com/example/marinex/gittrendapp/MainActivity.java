@@ -2,8 +2,13 @@ package com.example.marinex.gittrendapp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +16,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
@@ -42,16 +48,17 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-RecyclerView repo;recycler_ViewAdapter adapter;
-    String url1,url2,url3,language,date,url;
+    RecyclerView repo;
+    recycler_ViewAdapter adapter;
+    String url1, url2, url3, language, date, url;
 
 
-    Calendar calendar=Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      repo=(RecyclerView)findViewById(R.id.repo);
+        repo = (RecyclerView) findViewById(R.id.repo);
         repo.setLayoutManager(new LinearLayoutManager(this));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,24 +68,21 @@ RecyclerView repo;recycler_ViewAdapter adapter;
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
-
-        date=thisweek();
-         language="all";
-        url1="https://api.github.com/search/repositories?q=created:";
-        url2="+language:";
-        url3="&sort=stars&order=desc";
-        url=url1+date+url2+language+url3;
-        new dataModel(url).execute();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
+checkConnection();
+        date = thisweek();
+        language = "all";
+        url1 = "https://api.github.com/search/repositories?q=created:";
+        url2 = "+language:";
+        url3 = "&sort=stars&order=desc";
+        url = url1 + date + url2 + language + url3;
+        new dataModel(url).execute();
 
 
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.language_choser);
@@ -105,20 +109,18 @@ RecyclerView repo;recycler_ViewAdapter adapter;
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.week) {
-            date=this.thisweek();
-            url=url1+date+url2+language+url3;
+            date = this.thisweek();
+            url = url1 + date + url2 + language + url3;
             new dataModel(url).execute();
 
-        }
-        else if (id == R.id.this_month) {
-            date=this.thisMonth();
-            url=url1+date+url2+language+url3;
+        } else if (id == R.id.this_month) {
+            date = this.thisMonth();
+            url = url1 + date + url2 + language + url3;
             new dataModel(url).execute();
 
-        }
-        else if (id == R.id.this_year) {
-            date=this.thisYear();
-            url=url1+date+url2+language+url3;
+        } else if (id == R.id.this_year) {
+            date = this.thisYear();
+            url = url1 + date + url2 + language + url3;
             new dataModel(url).execute();
         }
 
@@ -132,74 +134,63 @@ RecyclerView repo;recycler_ViewAdapter adapter;
         int id = item.getItemId();
 
         if (id == R.id.c) {
-            language="c";
-            url=url1+date+url2+language+url3;
+            language = "c";
+            url = url1 + date + url2 + language + url3;
             new dataModel(url).execute();
 
         } else if (id == R.id.c_plus) {
-            language="cpp";
-            url=url1+date+url2+language+url3;
+            language = "cpp";
+            url = url1 + date + url2 + language + url3;
             new dataModel(url).execute();
         } else if (id == R.id.java) {
-            language="java";
-            url=url1+date+url2+language+url3;
+            language = "java";
+            url = url1 + date + url2 + language + url3;
             new dataModel(url).execute();
         } else if (id == R.id.php) {
-            language="php";
-            url=url1+date+url2+language+url3;
+            language = "php";
+            url = url1 + date + url2 + language + url3;
             new dataModel(url).execute();
         } else if (id == R.id.python) {
-            language="python";
-            url=url1+date+url2+language+url3;
+            language = "python";
+            url = url1 + date + url2 + language + url3;
             new dataModel(url).execute();
         } else if (id == R.id.html) {
-            language="html";
-            url=url1+date+url2+language+url3;
+            language = "html";
+            url = url1 + date + url2 + language + url3;
+            new dataModel(url).execute();
+        } else if (id == R.id.javascript) {
+            language = "javascript";
+            url = url1 + date + url2 + language + url3;
+            new dataModel(url).execute();
+        } else if (id == R.id.ruby) {
+            language = "ruby";
+            url = url1 + date + url2 + language + url3;
+            new dataModel(url).execute();
+        } else if (id == R.id.all) {
+            language = "all";
+            url = url1 + date + url2 + language + url3;
+            new dataModel(url).execute();
+        } else if (id == R.id.css) {
+            language = "css";
+            url = url1 + date + url2 + language + url3;
+            new dataModel(url).execute();
+        } else if (id == R.id.perl) {
+            language = "perl";
+            url = url1 + date + url2 + language + url3;
+            new dataModel(url).execute();
+        } else if (id == R.id.matlab) {
+            language = "matlab";
+            url = url1 + date + url2 + language + url3;
+            new dataModel(url).execute();
+        } else if (id == R.id.shell) {
+            language = "shell";
+            url = url1 + date + url2 + language + url3;
+            new dataModel(url).execute();
+        } else if (id == R.id.assembly) {
+            language = "assembly";
+            url = url1 + date + url2 + language + url3;
             new dataModel(url).execute();
         }
-        else if (id == R.id.javascript) {
-            language="javascript";
-            url=url1+date+url2+language+url3;
-            new dataModel(url).execute();
-        }
-        else if (id == R.id.ruby) {
-            language="ruby";
-            url=url1+date+url2+language+url3;
-            new dataModel(url).execute();
-        }else if (id == R.id.all) {
-            language="all";
-            url=url1+date+url2+language+url3;
-            new dataModel(url).execute();
-        }
-
-        else if (id == R.id.css) {
-            language="css";
-            url=url1+date+url2+language+url3;
-            new dataModel(url).execute();
-        }
-        else if (id == R.id.perl) {
-            language="perl";
-            url=url1+date+url2+language+url3;
-            new dataModel(url).execute();
-        }
-        else if (id == R.id.matlab) {
-            language="matlab";
-            url=url1+date+url2+language+url3;
-            new dataModel(url).execute();
-        }
-        else if (id == R.id.shell) {
-            language="shell";
-            url=url1+date+url2+language+url3;
-            new dataModel(url).execute();
-        }
-        else if (id == R.id.assembly) {
-            language="assembly";
-            url=url1+date+url2+language+url3;
-            new dataModel(url).execute();
-        }
-
-
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.language_choser);
@@ -218,7 +209,7 @@ RecyclerView repo;recycler_ViewAdapter adapter;
         ArrayList<String> language = new ArrayList<String>();
         ArrayList<Integer> forks = new ArrayList<Integer>();
         ArrayList<Integer> stars = new ArrayList<Integer>();
-        ArrayList<String> svn_url=new ArrayList<>();
+        ArrayList<String> svn_url = new ArrayList<>();
 
 
         public dataModel(String api) {
@@ -227,16 +218,16 @@ RecyclerView repo;recycler_ViewAdapter adapter;
         }
 
 
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
+
             pDialog = new ProgressDialog(MainActivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
+
 
         }
 
@@ -277,7 +268,7 @@ RecyclerView repo;recycler_ViewAdapter adapter;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-adapter=new recycler_ViewAdapter(name,language,forks,stars,svn_url,MainActivity.this);
+                adapter = new recycler_ViewAdapter(name, language, forks, stars, svn_url, MainActivity.this);
                 repo.setAdapter(adapter);
             }
         }
@@ -286,17 +277,17 @@ adapter=new recycler_ViewAdapter(name,language,forks,stars,svn_url,MainActivity.
 
     public String thisweek() {
         String month;
-        int date1= calendar.get(Calendar.DAY_OF_MONTH);
-        int month1=calendar.get(Calendar.MONTH);
-        int Year=calendar.get(Calendar.YEAR);
-        int day=calendar.get(Calendar.DAY_OF_WEEK);
-if(day!=1){
-    date1=date1-day;
-}
-        if(date1<day) {
-            month1=month1-1;
+        int date1 = calendar.get(Calendar.DAY_OF_MONTH);
+        int month1 = calendar.get(Calendar.MONTH);
+        int Year = calendar.get(Calendar.YEAR);
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        if (day != 1) {
+            date1 = date1 - day;
+        }
+        if (date1 < day) {
+            month1 = month1 - 1;
             if ((month1 == 0) || (month1 == 2) || (month1 == 4) || (month1 == 6) || (month1 == 7) || (month1 == 9) || (month1 == 11)) {
-                date1 = -date1 + 31-day;
+                date1 = -date1 + 31 - day;
                 if (month1 == -1) {
                     month1 = 11;
                     Year = Year - 1;
@@ -308,47 +299,77 @@ if(day!=1){
                 } else
                     date1 = -date1 + 28 - day;
 
-            }
-            else{
+            } else {
                 date1 = -date1 + 30 - day;
 
             }
         }
-        if(month1<10){
-            month="0"+(month1+1);
+        if (month1 < 10) {
+            month = "0" + (month1 + 1);
+        } else {
+            month = "" + (month1 + 1);
         }
-        else
-        {
-            month=""+(month1+1);
-        }
-        if(date1<10){
-            date="0"+(date1);
-        }
-        else
-        {
-            date=""+(date1);
+        if (date1 < 10) {
+            date = "0" + (date1);
+        } else {
+            date = "" + (date1);
         }
 
-        return Year+"-"+month+"-"+date1;
+        return Year + "-" + month + "-" + date1;
 
     }
-    public String thisMonth(){
+
+    public String thisMonth() {
         String month;
-         int month1=calendar.get(Calendar.MONTH);
-        if(month1<10){
-            month="0"+(month1+1);
-        }
-        else
-        {
-            month=""+(month1+1);
+        int month1 = calendar.get(Calendar.MONTH);
+        if (month1 < 10) {
+            month = "0" + (month1 + 1);
+        } else {
+            month = "" + (month1 + 1);
         }
 
-return calendar.get(Calendar.YEAR)+"-"+month;
-    }
-    public String thisYear(){
-        return ""+calendar.get(Calendar.YEAR);
+        return calendar.get(Calendar.YEAR) + "-" + month;
     }
 
+    public String thisYear() {
+        return "" + calendar.get(Calendar.YEAR);
+    }
+
+    protected void turnondata() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("you seems offline")
+                .setTitle("Unable to connect")
+                .setCancelable(false)
+                .setPositiveButton("Settings",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent i = new Intent(Settings.ACTION_SETTINGS);
+                                startActivity(i);
+                            }
+                        }
+                )
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                MainActivity.this.finish();
+                            }
+                        }
+                );
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public boolean checkConnection() {
+        ConnectivityManager con = (ConnectivityManager) getSystemService(MainActivity.this.CONNECTIVITY_SERVICE);
+        NetworkInfo net = con.getActiveNetworkInfo();
+        if (net != null && net.isConnected()) {
+            return true;}
+            else{
+            MainActivity.this.turnondata();
+            return  false;
+        }
+    }
 }
 
 

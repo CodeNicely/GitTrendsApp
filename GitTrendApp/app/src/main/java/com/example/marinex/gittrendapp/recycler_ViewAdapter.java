@@ -67,7 +67,7 @@ this.context=c;
 
             holder.forks.setText("forks " + j + "k");
         } else {
-           
+
             holder.forks.setText("forks " + j);
 
         }
