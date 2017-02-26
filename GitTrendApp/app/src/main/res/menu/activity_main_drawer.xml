@@ -44,15 +44,11 @@
         <item
             android:id="@+id/shell"
             android:title="Shell" />
-        <item
-            android:id="@+id/sql"
-            android:title="SQL" />
+
         <item
             android:id="@+id/css"
             android:title="CSS"/>
-        <item
-            android:id="@+id/xml"
-            android:title="XML"/>
+
 
 
 

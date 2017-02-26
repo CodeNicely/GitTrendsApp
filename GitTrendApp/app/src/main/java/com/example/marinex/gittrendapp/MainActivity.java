@@ -37,6 +37,7 @@ import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -44,9 +45,9 @@ public class MainActivity extends AppCompatActivity
 RecyclerView repo;recycler_ViewAdapter adapter;
     String url1,url2,url3,language,date,url;
 
+
     Calendar calendar=Calendar.getInstance();
-    //FragmentManager f=getSupportFragmentManager();
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -59,7 +60,10 @@ RecyclerView repo;recycler_ViewAdapter adapter;
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-         date=this.thisweek();
+
+
+
+        date=thisweek();
          language="all";
         url1="https://api.github.com/search/repositories?q=created:";
         url2="+language:";
@@ -71,8 +75,8 @@ RecyclerView repo;recycler_ViewAdapter adapter;
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        //myDialog m=new myDialog();
-        //m.show(getFragmentManager(),"nbnn");
+
+
 
     }
     @Override
@@ -104,11 +108,13 @@ RecyclerView repo;recycler_ViewAdapter adapter;
             date=this.thisweek();
             url=url1+date+url2+language+url3;
             new dataModel(url).execute();
+
         }
         else if (id == R.id.this_month) {
             date=this.thisMonth();
             url=url1+date+url2+language+url3;
             new dataModel(url).execute();
+
         }
         else if (id == R.id.this_year) {
             date=this.thisYear();
@@ -278,34 +284,66 @@ adapter=new recycler_ViewAdapter(name,language,forks,stars,svn_url,MainActivity.
     }
 
 
-public String thisweek(){
-
-
-
-
-    int date=calendar.get(Calendar.DAY_OF_MONTH)-calendar.get(Calendar.DAY_OF_WEEK)+1;
-    String month;
-    if((calendar.get(Calendar.MONTH)+1)<10){
-        month="0"+(calendar.get(Calendar.MONTH)+1);
-    }
-    else
-    {
-        month=""+(calendar.get(Calendar.MONTH)+1);
-    }
-    int Year=calendar.get(Calendar.YEAR);
-    String week=Year+"-"+month+"-"+date;
-    return week;
-}
-    public String thisMonth(){
+    public String thisweek() {
         String month;
-        if((calendar.get(Calendar.MONTH)+1)<10){
-            month="0"+(calendar.get(Calendar.MONTH)+1);
+        int date1= calendar.get(Calendar.DAY_OF_MONTH);
+        int month1=calendar.get(Calendar.MONTH);
+        int Year=calendar.get(Calendar.YEAR);
+        int day=calendar.get(Calendar.DAY_OF_WEEK);
+if(day!=1){
+    date1=date1-day;
+}
+        if(date1<day) {
+            month1=month1-1;
+            if ((month1 == 0) || (month1 == 2) || (month1 == 4) || (month1 == 6) || (month1 == 7) || (month1 == 9) || (month1 == 11)) {
+                date1 = -date1 + 31-day;
+                if (month1 == -1) {
+                    month1 = 11;
+                    Year = Year - 1;
+                }
+
+            } else if (month1 == 1) {
+                if ((Year % 4 == 0 || Year % 400 == 0) && (Year % 4 != 0)) {
+                    date1 = -date1 + 29 - day;
+                } else
+                    date1 = -date1 + 28 - day;
+
+            }
+            else{
+                date1 = -date1 + 30 - day;
+
+            }
+        }
+        if(month1<10){
+            month="0"+(month1+1);
         }
         else
         {
-            month=""+(calendar.get(Calendar.MONTH)+1);
+            month=""+(month1+1);
         }
-        return ""+calendar.get(Calendar.YEAR)+"-"+month;
+        if(date1<10){
+            date="0"+(date1);
+        }
+        else
+        {
+            date=""+(date1);
+        }
+
+        return Year+"-"+month+"-"+date1;
+
+    }
+    public String thisMonth(){
+        String month;
+         int month1=calendar.get(Calendar.MONTH);
+        if(month1<10){
+            month="0"+(month1+1);
+        }
+        else
+        {
+            month=""+(month1+1);
+        }
+
+return calendar.get(Calendar.YEAR)+"-"+month;
     }
     public String thisYear(){
         return ""+calendar.get(Calendar.YEAR);

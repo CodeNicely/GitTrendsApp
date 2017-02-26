@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -50,18 +51,23 @@ this.context=c;
         holder.title.setText("  "+tittle.get(position));
         holder.lang_used.setText("  "+language.get(position));
 
-        int i = fork.get(position);
-        int j = stars.get(position);
-        if (i >= 1000) {
+        float j = fork.get(position);
+        float i = stars.get(position);
+        if (i>= 1000) {
             i = i / 1000;
+
             holder.star.setText("   Stars " + i + "k");
         } else {
+
             holder.star.setText("   Stars " + i);
+
         }
         if (j >= 1000) {
             j = j / 1000;
+
             holder.forks.setText("forks " + j + "k");
         } else {
+           
             holder.forks.setText("forks " + j);
 
         }
