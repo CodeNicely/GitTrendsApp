@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
 checkConnection();
         date = thisweek();
         language = "all";
-        url1 = "https://api.github.com/search/repositories?q=created:";
+        url1 = "repositories?q=created:";
         url2 = "+language:";
         url3 = "&sort=stars&order=desc";
         url = url1 + date + url2 + language + url3;
