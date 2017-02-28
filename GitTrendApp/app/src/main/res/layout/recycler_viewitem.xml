@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/title"
+        android:layout_height="50dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:text="TextView"
+        android:layout_below="@+id/lang_used"
+        android:layout_alignParentStart="true"
+        android:id="@+id/star"
+        android:layout_height="20dp"
+        android:layout_width="120dp"
+       />
+
+
+    <TextView
+        android:text="TextView"
+        android:layout_height="20dp"
+        android:id="@+id/forks"
+        android:layout_below="@+id/lang_used"
+        android:layout_alignParentEnd="true"
+        android:layout_width="120dp"
+        />
+
+        <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:id="@+id/lang_used"
+        android:layout_height="30dp"
+        android:layout_below="@+id/title"
+        android:layout_alignParentStart="true"
+        android:textSize="15dp"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+
+</RelativeLayout>

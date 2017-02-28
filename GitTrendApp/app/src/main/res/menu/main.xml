@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/week"
+        android:orderInCategory="100"
+        android:title="this week"
+       app:showAsAction="never" />
+    <item
+        android:id="@+id/this_month"
+        android:orderInCategory="100"
+        android:title="This month"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/this_year"
+        android:orderInCategory="100"
+        android:title="This year"
+        app:showAsAction="never" />
+</menu>
